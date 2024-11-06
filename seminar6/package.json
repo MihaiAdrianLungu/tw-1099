@@ -1,0 +1,31 @@
+{
+  "name": "seminar6",
+  "version": "1.0.0",
+  "description": "First backend project with express",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MihaiAdrianLungu/tw-1099.git"
+  },
+  "keywords": [
+    "javascript",
+    "express"
+  ],
+  "author": "Lungu Mihai Adrian",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MihaiAdrianLungu/tw-1099/issues"
+  },
+  "homepage": "https://github.com/MihaiAdrianLungu/tw-1099#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }
+}
