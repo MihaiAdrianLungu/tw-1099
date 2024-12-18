@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { setLoggedIn, setToken } from "./store/slices/globalSlice";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -7,6 +9,7 @@ function Login() {
   const [error, setError] = useState('');
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -25,6 +28,9 @@ function Login() {
         setError(json.message);
     } else {
         localStorage.setItem('token', json.data.token);
+        dispatch(setLoggedIn(true));
+        dispatch(setToken(json.data.token));
+        
         navigate('/');
     }
   };

@@ -1,28 +1,34 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
 import Homepage from "./Homepage";
 import Login from "./Login";
-// import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import useCheckToken from "./hooks/useCheckToken";
+import Profile from "./Profile";
 
 function App() {
-  // const [redirected, setRedirected] = useState(false)
+  const { checkTokenLoading, loggedIn } = useSelector((state) => state.global);
 
-  // useEffect(() => {
-  //   if (!redirected) {
-  //     window.location.href = '/login'
-  //     setRedirected(true);
-  //   }
-  // }, [])
+  useCheckToken();
 
-  return <div>
-    <Router>
-      <Routes>
-        <Route path="/" element={<Homepage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="*" element={<div>Page not found</div>} />
-      </Routes>
-    </Router>
-  </div>;
+  return (
+    <div>
+      <Router>
+        <Routes>
+          {checkTokenLoading ? (
+            <Route path="*" element={<div>Spinner</div>} />
+          ) : (
+            <>
+              <Route path="/" element={<Homepage />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/profile" element={loggedIn ? <Profile /> : <Navigate to='/login'/>} />
+              <Route path="*" element={<div>Page not found</div>} />
+            </>
+          )}
+        </Routes>
+      </Router>
+    </div>
+  );
 }
 
 export default App;

@@ -35,4 +35,22 @@ router.post('/login', async (req, res) => {
     }
 })
 
+router.post('/check', async (req, res) => {
+    const token = req.body.token;
+
+    if (!token) {
+        return res.status(400).json({success: false, message: 'Token not found', data: {}});
+    }
+
+    try {
+        const validToken = jwt.verify(token, process.env.TOKEN_SECRET);
+
+        if (validToken) {
+            return res.status(200).json({success: true, message: 'Valid token', data: {token}});
+        }
+    } catch (error) {
+        res.status(400).json({success: false, message: 'Invalid token', data: {}});
+    }
+})
+
 module.exports = router;
