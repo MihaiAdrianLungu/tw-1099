@@ -1,0 +1,40 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A simple app</title>
+    <script>
+        window.onload = () => {
+            const main = document.getElementById('main')
+            const sortAscBtn = document.getElementById('sortAscBtn')
+            const sortDescBtn = document.getElementById('sortDescBtn')
+
+            sortAscBtn.onclick = () => load(1);
+            sortDescBtn.onclick = () => load(-1);
+
+            const load = async (order) =>{
+                try{
+                    const response = await fetch(`/employees?sortOrder=${order}`);
+                    const data = await response.json();
+                    let rows = data.map((e) => `
+                        <div>
+                            ${e.name} ${e.job}
+                        </div>
+                    `)
+                    main.innerHTML = rows.join('')
+                }
+                catch(err){
+                    console.warn(err)
+                }
+            }
+            load(1)
+        }
+    </script>
+</head>
+<body>
+    <h2>A simple app</h2>
+    <button id="sortAscBtn">Sort Ascending</button>
+    <button id="sortDescBtn">Sort Descending</button>
+    <div id=main></div>
+</body>
+</html>
